@@ -1,0 +1,19 @@
+{
+  "name": "epamnodejs",
+  "version": "1.0.0",
+  "description": "node js global mentroing program",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balabukha/nodejs-mentoring.git"
+  },
+  "author": "Balabukha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/balabukha/nodejs-mentoring/issues"
+  },
+  "homepage": "https://github.com/balabukha/nodejs-mentoring#readme"
+}
