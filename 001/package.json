@@ -6,8 +6,13 @@
   "scripts": {
     "task1": "nodemon task1.js",
     "task2": "nodemon task2.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-task1": "babel task1.js -d dist",
+    "build-task2": "babel task2.js -d dist",
+    "start-task1": "npm run build-task1 && nodemon task1.js",
+    "start-task2": "npm run build-task2 && nodemon task2.js"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/balabukha/nodejs-mentoring.git"
@@ -19,10 +24,13 @@
   },
   "homepage": "https://github.com/balabukha/nodejs-mentoring#readme",
   "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
     "nodemon": "^2.0.0"
   },
   "dependencies": {
-    "csvtojson": "^2.0.10",
-    "request": "^2.88.0"
+    "csvtojson": "^2.0.10"
   }
 }

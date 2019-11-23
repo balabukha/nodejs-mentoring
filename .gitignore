@@ -6,3 +6,4 @@
 *.iml
 .idea
 001/node_modules/
+001/dist/

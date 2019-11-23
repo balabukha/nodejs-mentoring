@@ -1,5 +1,5 @@
-const csv = require('csvtojson');
-const fs = require('fs');
+import csv from 'csvtojson';
+import fs from 'fs';
 
 const csvParser = function(input, output) {
   const writeableStream =  fs.createWriteStream(output);
@@ -13,7 +13,7 @@ const csvParser = function(input, output) {
         writeableStream.write(jsonData.toString() + "\n");
         resolve(json)
       })
-    },(err) => console.log(err), (result) => console.log(result));
+    },(err) => console.log(err));
 };
 
-module.exports = csvParser;
+export default csvParser;
