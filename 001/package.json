@@ -4,15 +4,14 @@
   "description": "node js global mentroing program",
   "main": "index.js",
   "scripts": {
-    "task1": "nodemon task1.js",
-    "task2": "nodemon task2.js",
+    "task1": "nodemon src/task1.js",
+    "task2": "nodemon src/task2.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-task1": "babel task1.js -d dist",
-    "build-task2": "babel task2.js -d dist",
-    "start-task1": "npm run build-task1 && nodemon task1.js",
-    "start-task2": "npm run build-task2 && nodemon task2.js"
+    "build-task1": "babel src -d dist",
+    "build-task2": "babel src -d dist",
+    "start-task1": "npm run build-task1 && nodemon dist/task1.js",
+    "start-task2": "npm run build-task2 && nodemon dist/task2.js"
   },
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/balabukha/nodejs-mentoring.git"
