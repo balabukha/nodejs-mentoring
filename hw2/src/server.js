@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-// const users = require("./users");
 
 app.set("port", 3030);
 
