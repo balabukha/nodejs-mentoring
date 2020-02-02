@@ -1,28 +1,34 @@
-const uuidv4 = require("uuid/v4");
-let mockData = require("../../mockData").users;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
-const getAllActiveUsers = data => data.filter(user => !user.isDeleted);
+// models
+const Users = require('../model/user');
 
 exports.getUsers = function (req, res) {
   try {
     let { login, limit } = req.query;
+
     limit = +limit || 30;
+    login = login || '';
 
-    let result = login
-      ? getAllActiveUsers(mockData.filter(user => user.login.includes(login)))
-      : getAllActiveUsers(mockData);
-
-    result = result.sort((a, b) => {
-      const nameA = a.login.toLowerCase();
-      const nameB = b.login.toLowerCase();
-      if (nameA < nameB)
-        return -1;
-      if (nameA > nameB)
-        return 1;
-      return 0
+    Users.findAll({
+      limit: limit,
+      where: {
+        login: {
+          [Op.like]: `%${login}%`
+        }
+      },
+      users: [
+        ['login', 'ASC'],
+      ],
+      raw: true,
+    }).then(function(users) {
+      res.status(200).json(users);
+    }).catch(Sequelize.ValidationError, function (err) {
+      return res.status(422).send(err.errors);
+    }).catch(function (err) {
+      return res.status(400).json({ message: "error" });
     });
-
-    res.status(200).json(result.slice(0, limit));
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
@@ -31,9 +37,19 @@ exports.getUsers = function (req, res) {
 exports.getUser = function (req, res) {
   try {
     let { id } = req.params;
-    const result = mockData.filter(user => user.id === id);
 
-    res.status(200).json(result);
+    Users.findAll({
+      where: {
+        id: id,
+      }
+    }).then(function(result) {
+      res.status(200).json(result);
+    }).catch(Sequelize.ValidationError, function (err) {
+      return res.status(422).send(err.errors);
+    }).catch(function (err) {
+      return res.status(400).json({ message: "error" });
+    })
+
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
@@ -41,9 +57,22 @@ exports.getUser = function (req, res) {
 
 exports.getAllUsers = function (req, res) {
   try {
-    const result = getAllActiveUsers(mockData);
-
-    return res.status(200).json(result);
+    Users.findAll({
+      where: {
+        isdeleted: false
+      },
+      users: [
+        ['login', 'ASC'],
+      ],
+      raw: true,
+    }).then(function(users) {
+      res.status(200).json(users);
+    })
+      .catch(Sequelize.ValidationError, function (err) {
+        return res.status(422).send(err.errors);
+      }).catch(function (err) {
+      return res.status(400).json({ message: "error" });
+    });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
@@ -52,10 +81,18 @@ exports.getAllUsers = function (req, res) {
 exports.createUser = function (req, res) {
   try {
     const { login, password, age } = req.body;
-    const uuid = uuidv4();
-    mockData = [...mockData, { id: uuid, login, password, age, isDeleted: false }];
 
-    return res.status(200).json(mockData);
+    Users.create({
+      login,
+      password,
+      age,
+      isdeleted: false,
+    }).then(result => res.status(200).json({ status: 200, message: result }))
+      .catch(Sequelize.ValidationError, function (err) {
+        return res.status(422).send(err.errors);
+      }).catch(function (err) {
+      return res.status(400).json({ message: "error" });
+    });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
@@ -63,39 +100,44 @@ exports.createUser = function (req, res) {
 
 exports.updateUser = function (req, res) {
   try {
-    const user = mockData.find(user => user.id === req.params.id);
-    if (user && !user.isDeleted) {
-      const { login, password, age } = req.body;
-      const dataWithoutUser = mockData.filter(data => data.id !== user.id);
-      mockData = [
-        ...dataWithoutUser,
-        {
-          id: user.id,
-          login,
-          password,
-          age,
-          isDeleted: user.isDeleted
-        }
-      ];
-      return res.status(200).json(mockData);
-    } else {
-      return res.status(400).send("User does not exist or deleted");
-    }
+    let { id } = req.params;
+    const { login, password, age } = req.body;
+
+    Users.update({
+      login,
+      password,
+      age,
+    }, {
+      where: {
+        id: id
+      }
+    }).then(result => res.status(200).json({ status: 200, message: result }))
+      .catch(Sequelize.ValidationError, function (err) {
+        return res.status(422).send(err.errors);
+      }).catch(function (err) {
+      return res.status(400).json({ message: "error" });
+    });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
 
 exports.deleteUser = function (req, res) {
-  try {
-    const user = mockData.find(user => user.id === req.params.id);
-    if (user && !user.isDeleted) {
-      user.isDeleted = true;
+  let { id } = req.params;
 
-      return res.status(200).send("User deleted");
-    } else {
-      return res.status(400).send("User does not exist or already deleted");
-    }
+  try {
+    Users.update({
+      isdeleted: true,
+    }, {
+      where: {
+        id: id
+      }
+    }).then(result => res.status(200).json({ status: 200, message: result }))
+      .catch(Sequelize.ValidationError, function (err) {
+        return res.status(422).send(err.errors);
+      }).catch(function (err) {
+      return res.status(400).json({ message: "error" });
+    })
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
