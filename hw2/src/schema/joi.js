@@ -1,5 +1,5 @@
-const Joi = require("joi");
-const common = require("../common");
+import Joi from "joi";
+import common from "../common";
 
 const querySchema = Joi.object({
   login: Joi.string()
@@ -15,7 +15,7 @@ const querySchema = Joi.object({
     .min(common.MIN_AGE_VALIDATION)
     .max(common.MAX_AGE_VALIDATION)
     .required(),
-  isDeleted: Joi.boolean(),
+  isdeleted: Joi.boolean(),
 });
 
 module.exports = querySchema;

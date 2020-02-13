@@ -4,6 +4,7 @@
 
 # IDEA Files
 .idea
+001/dist/
 001/node_modules/
 002/node_modules/
-001/dist/
+hw2/node_modules/

@@ -1,11 +1,15 @@
-const express = require("express");
-const app = express();
+import express from "express";
+import expressLoader from "./loaders"
+import {APP_PORT} from "./config";
 
-app.set("port", 3030);
+async function startServer() {
+  const app = express();
 
-app.use(express.json());
-app.use("/", require("./users.js"));
+  await expressLoader({ expressApp: app });
 
-app.listen(app.get("port"), () => {
-  console.log(`[OK] Server is running on localhost:${app.get("port")}`);
-});
+  app.listen(APP_PORT, () => {
+    console.log(`Server is running on localhost:${APP_PORT}`);
+  });
+}
+
+startServer();
