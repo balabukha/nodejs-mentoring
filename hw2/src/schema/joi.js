@@ -1,5 +1,5 @@
-const Joi = require("joi");
-const common = require("../common");
+import Joi from "joi";
+import common from "../common";
 
 const querySchema = Joi.object({
   login: Joi.string()

@@ -1,8 +1,8 @@
 import expressLoader from './express';
-import Users from '../model/user';
+import Users from './userModel';
 
 export default async ({ expressApp }) => {
-  const ExpressConnection = await expressLoader({ app: expressApp });
+  await expressLoader({ app: expressApp });
   console.log('Express Intialized');
-  const UsersConnection = await new Users();
+  await new Users();
 }

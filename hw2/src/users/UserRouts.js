@@ -1,9 +1,10 @@
-const express = require("express");
-const validator = require("express-joi-validation").createValidator({});
-const UserController = require("../controllers/user.controller");
+import express from "express";
+import UserController from "../users/UserController";
+import expressJoiValidation from "express-joi-validation";
+import querySchema from "../schema/joi";
 
+const validator = expressJoiValidation.createValidator({});
 const router = express.Router();
-const querySchema = require("../schema/joi");
 
 router.get("/", UserController.getUsers);
 router.get("/:id", UserController.getUser);

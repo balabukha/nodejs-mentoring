@@ -1,5 +1,5 @@
-const dotenv = require('dotenv');
-// config() will read your .env file, parse the contents, assign it to process.env.
+import dotenv from 'dotenv';
+
 dotenv.config();
 
 export const HOST = process.env.DB_HOST;
@@ -8,6 +8,7 @@ export const USER = process.env.DB_USER;
 export const PORT = process.env.DB_PORT;
 export const PASSWORD = process.env.DB_PASSWORD;
 
+// for pg using
 export const { URI } = `postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}`;
 
 export const APP_PORT = process.env.APP_PORT;
