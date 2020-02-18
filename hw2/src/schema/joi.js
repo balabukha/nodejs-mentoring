@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import common from '../common';
 
-const querySchema = Joi.object({
+export const userQuerySchema = Joi.object({
     login: Joi.string()
         .required()
         .regex(common.LOGIN_PASSWORD_PATTERN)
@@ -18,4 +18,10 @@ const querySchema = Joi.object({
     isdeleted: Joi.boolean()
 });
 
-export default querySchema;
+export const groupQuerySchema = Joi.object({
+    id: Joi.string(),
+    name: Joi.string()
+        .required(),
+    permission: Joi.string()
+        .valid(['READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES']).required()
+});

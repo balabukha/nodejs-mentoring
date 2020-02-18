@@ -1,15 +1,6 @@
 import sequelize from './db';
 import Sequelize from 'sequelize';
 
-sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
-
 const Users = sequelize.define('users', {
     login: {
         type: Sequelize.STRING
