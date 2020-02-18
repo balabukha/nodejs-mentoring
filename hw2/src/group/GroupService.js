@@ -1,10 +1,8 @@
 import GroupDAL from './GroupDAL';
 import uuidv4 from 'uuid/v4';
 
-
 export default {
     getAllGroups() {
-
         return GroupDAL.getAllGroups();
     },
 
