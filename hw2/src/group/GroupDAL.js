@@ -1,14 +1,14 @@
-import Group from '../loaders/groupModel';
+import models from '../loaders/models';
 
 export default {
     getAllGroups() {
-        return Group.findAll({
+        return models.Group.findAll({
             raw: true
         });
     },
 
     getGroup(id) {
-        return Group.findAll({
+        return models.Group.findAll({
             where: {
                 id
             }
@@ -16,7 +16,7 @@ export default {
     },
 
     createGroup(id, name, permission) {
-        return Group.create({
+        return models.Group.create({
             id,
             name,
             permission
@@ -24,7 +24,7 @@ export default {
     },
 
     updateGroup(name, permission, id) {
-        return Group.update({
+        return models.Group.update({
             name,
             permission
         }, {
@@ -35,7 +35,7 @@ export default {
     },
 
     deleteGroup(id) {
-        return Group.destroy({
+        return models.Group.destroy({
             where: {
                 id
             }

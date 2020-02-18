@@ -1,10 +1,10 @@
+import models from '../loaders/models';
 import Sequelize from 'sequelize';
-import Users from '../loaders/userModel';
 const Op = Sequelize.Op;
 
 export default {
     getUsers(limit, login) {
-        return Users.findAll({
+        return models.Users.findAll({
             limit,
             where: {
                 login: {
@@ -19,7 +19,7 @@ export default {
     },
 
     getUser(id) {
-        return Users.findAll({
+        return models.Users.findAll({
             where: {
                 id
             }
@@ -27,7 +27,7 @@ export default {
     },
 
     getAllUsers() {
-        return Users.findAll({
+        return models.Users.findAll({
             where: {
                 isdeleted: false
             },
@@ -39,7 +39,7 @@ export default {
     },
 
     createUser(login, password, age) {
-        return Users.create({
+        return models.Users.create({
             login,
             password,
             age,
@@ -48,7 +48,7 @@ export default {
     },
 
     updateUser(login, password, age, id) {
-        return Users.update({
+        return models.Users.update({
             login,
             password,
             age
@@ -60,7 +60,7 @@ export default {
     },
 
     deleteUser(id) {
-        return Users.update({
+        return models.Users.update({
             isdeleted: true
         }, {
             where: {
