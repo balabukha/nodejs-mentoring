@@ -16,4 +16,9 @@ router.put('/:id', validator.body(userQuerySchema), UserController.updateUser);
 
 router.delete('/:id', UserController.deleteUser);
 
+router.all('*', async (req, res) => {
+    res.status(404);
+    res.end('404');
+});
+
 export default router;
