@@ -12,4 +12,3 @@ export const PASSWORD = process.env.DB_PASSWORD;
 export const { URI } = `postgres://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}`;
 
 export const APP_PORT = process.env.APP_PORT;
-

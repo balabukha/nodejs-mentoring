@@ -1,69 +1,71 @@
+import models from '../loaders/models';
 import Sequelize from 'sequelize';
-import Users from '../loaders/userModel';
 const Op = Sequelize.Op;
 
-exports.getUsers = function(limit, login) {
-  return Users.findAll({
-    limit: limit,
-    where: {
-      login: {
-        [Op.like]: `%${login}%`
-      }
+export default {
+    getUsers(limit, login) {
+        return models.Users.findAll({
+            limit,
+            where: {
+                login: {
+                    [Op.like]: `%${login}%`
+                }
+            },
+            users: [
+                ['login', 'ASC']
+            ],
+            raw: true
+        });
     },
-    users: [
-      ['login', 'ASC'],
-    ],
-    raw: true,
-  })
-};
 
-exports.getUser = function(id) {
-  return Users.findAll({
-    where: {
-      id: id,
-    }
-  })
-};
-
-exports.getAllUsers = function() {
-  return Users.findAll({
-    where: {
-      isdeleted: false
+    getUser(id) {
+        return models.Users.findAll({
+            where: {
+                id
+            }
+        });
     },
-    users: [
-      ['login', 'ASC'],
-    ],
-    raw: true,
-  })
-};
 
-exports.createUser = function(login, password, age) {
-  return Users.create({
-    login,
-    password,
-    age,
-    isdeleted: false,
-  })
-};
+    getAllUsers() {
+        return models.Users.findAll({
+            where: {
+                isdeleted: false
+            },
+            users: [
+                ['login', 'ASC']
+            ],
+            raw: true
+        });
+    },
 
-exports.updateUser = function(login, password, age, id) {
-  return Users.update({
-    login,
-    password,
-    age,
-  }, {
-    where: {
-      id: id
+    createUser(login, password, age) {
+        return models.Users.create({
+            login,
+            password,
+            age,
+            isdeleted: false
+        });
+    },
+
+    updateUser(login, password, age, id) {
+        return models.Users.update({
+            login,
+            password,
+            age
+        }, {
+            where: {
+                id
+            }
+        });
+    },
+
+    deleteUser(id) {
+        return models.Users.update({
+            isdeleted: true
+        }, {
+            where: {
+                id
+            }
+        });
     }
-  })
-};
-
-exports.deleteUser = function(id) {
-  return Users.update({
-    isdeleted: true,
-  }, {
-    where: {
-      id: id
-    }
-  })
 };
