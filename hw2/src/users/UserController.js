@@ -1,23 +1,66 @@
 import UserService from './UserService';
+import logger from '../logger';
+
+const serviceName = 'UserService';
 
 export default {
-    async getUsers(req, res) {
+    async getUsers(req, res, next) {
         try {
             const { login, limit } = req.query;
             const users = await UserService.getUsers(limit, login);
-            res.status(200).json(users);
+            if (users && users.length) {
+                res.status(200).json(users);
+            }
+
+            logger.warn({
+                service: serviceName,
+                method: req.method,
+                query: { login, limit },
+                message: 'Users are not found'
+            });
+            res.status(400);
+            res.end('Users are not found');
         } catch (e) {
-            return res.status(400).json({ status: 400, message: e.message });
+            const { login, limit } = req.query;
+
+            logger.warn({
+                service: serviceName,
+                method: req.method,
+                query: { login, limit },
+                message: e.message
+            });
+
+            next(e);
         }
     },
 
-    async getUser(req, res) {
+    async getUser(req, res, next) {
         try {
             const { id } = req.params;
             const users = await UserService.getUser(id);
-            res.status(200).json(users);
+            if (users && users.length) {
+                res.status(200).json(users);
+            }
+
+            logger.warn({
+                service: serviceName,
+                method: req.method,
+                params: id,
+                message: 'User is not found'
+            });
+            res.status(400);
+            res.end('User is not found');
         } catch (e) {
-            return res.status(400).json({ status: 400, message: e.message });
+            const { id } = req.params;
+
+            logger.warn({
+                service: serviceName,
+                method: req.method,
+                params: id,
+                message: e.message
+            });
+
+            next(e);
         }
     },
 

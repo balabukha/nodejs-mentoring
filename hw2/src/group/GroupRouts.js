@@ -15,9 +15,4 @@ router.put('/:id', validator.body(groupQuerySchema), GroupController.updateGroup
 
 router.delete('/:id', GroupController.deleteGroup); // -
 
-router.all('*', async (req, res) => {
-    res.status(404);
-    res.end('404');
-});
-
 export default router;

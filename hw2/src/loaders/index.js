@@ -1,6 +1,4 @@
 import expressLoader from './express';
-// import Users from './userModel';
-// import Group from './groupModel';
 import sequelize from './db.js';
 import models from './models';
 
