@@ -16,7 +16,7 @@ export default async ({ app }) => {
         res.status(404);
         res.end('404');
     });
-    app.use((err, req, res) => {
+    app.use((err, req, res, next) => {
         console.error(err.stack);
         res.status(500).send(`Server error ${err}`);
     });

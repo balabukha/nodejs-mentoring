@@ -11,3 +11,12 @@
 2020-03-01T20:35:10.568Z, [UserService], level: warn, message: User is not found, method: [GET], query: , params: 000
 2020-03-01T20:46:30.942Z, [UserService], level: warn, message: User is not found, method: [GET], query: , params: 000
 2020-03-01T20:47:10.553Z, [UserService], level: warn, message: User is not found, method: GET, query: , params: 000
+2020-03-05T11:38:59.896Z, [UserService], level: warn, message: User is not found, method: GET, query: , params: 1
+2020-03-05T11:39:30.895Z, [UserService], level: warn, message: User is not found, method: GET, query: , params: 1
+2020-03-05T11:39:33.386Z, [UserService], level: warn, message: User is not found, method: GET, query: , params: 1
+2020-03-05T12:18:37.326Z, [UserService], level: warn, message: User is not found, method: GET, query: , params: 0
+2020-03-05T12:19:53.247Z, [UserService], level: warn, message: _UserService.default.getUserd is not a function, method: GET, query: , params: 0
+2020-03-05T12:20:10.628Z, [UserService], level: warn, message: _UserService.default.getUserd is not a function, method: GET, query: , params: 0
+2020-03-05T12:22:20.396Z, [UserService], level: warn, message: _UserService.default.getUserd is not a function, method: GET, query: , params: 0
+2020-03-05T12:23:13.861Z, [UserService], level: warn, message: _UserService.default.getUserd is not a function, method: GET, query: , params: 0
+2020-03-05T12:23:18.929Z, [UserService], level: warn, message: _UserService.default.getUserd is not a function, method: GET, query: , params: 0
