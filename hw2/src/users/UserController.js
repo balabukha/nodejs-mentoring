@@ -9,7 +9,7 @@ export default {
             const { login, limit } = req.query;
             const users = await UserService.getUsers(limit, login);
             if (users && users.length) {
-                res.status(200).json(users);
+                return res.status(200).json(users);
             }
 
             logger.warn({
@@ -30,16 +30,16 @@ export default {
                 message: e.message
             });
 
-            next(e);
+            return next(e);
         }
     },
 
     async getUser(req, res, next) {
         try {
             const { id } = req.params;
-            const users = await UserService.getUser(id);
+            const users = await UserService.getUserd(id);
             if (users && users.length) {
-                res.status(200).json(users);
+                return res.status(200).json(users);
             }
 
             logger.warn({
@@ -60,49 +60,105 @@ export default {
                 message: e.message
             });
 
-            next(e);
+            return next(e);
         }
     },
 
-    async getAllUsers(req, res) {
+    async getAllUsers(req, res, next) {
         try {
             const { id } = req.params;
             const users = await UserService.getAllUsers(id);
-            res.status(200).json(users);
+
+            if (users && users.length) {
+                return res.status(200).json(users);
+            }
+
+            logger.warn({
+                service: serviceName,
+                method: req.method,
+                params: id,
+                message: 'Users are not found'
+            });
         } catch (e) {
-            return res.status(400).json({ status: 400, message: e.message });
+            const { id } = req.params;
+
+            logger.warn({
+                service: serviceName,
+                method: req.method,
+                params: id,
+                message: e.message
+            });
+
+            return next(e);
         }
     },
 
-    async createUser(req, res) {
+    async createUser(req, res, next) {
         try {
             const { login, password, age } = req.body;
             const user = await UserService.createUser(login, password, age);
-            res.status(200).json(user);
+
+            if (user) {
+                return res.status(200).json(user);
+            }
         } catch (e) {
-            return res.status(400).json({ status: 400, message: e.message });
+            const { login, password, age } = req.body;
+
+            logger.warn({
+                service: serviceName,
+                method: req.method,
+                query: { login, password, age },
+                message: e.message
+            });
+
+            return next(e);
         }
     },
 
-    async updateUser(req, res) {
+    async updateUser(req, res, next) {
         try {
             const { id } = req.params;
             const { login, password, age } = req.body;
 
             const user = await UserService.updateUser(login, password, age, id);
-            res.status(200).json(user);
+
+            if (user) {
+                return res.status(200).json(user);
+            }
         } catch (e) {
-            return res.status(400).json({ status: 400, message: e.message });
+            const { id } = req.params;
+            const { login, password, age } = req.body;
+
+            logger.warn({
+                service: serviceName,
+                method: req.method,
+                query: { login, password, age },
+                params: id,
+                message: e.message
+            });
+
+            return next(e);
         }
     },
 
-    async deleteUser(req, res) {
+    async deleteUser(req, res, next) {
         try {
             const { id } = req.params;
             const user = await UserService.deleteUser(id);
-            res.status(200).json(user);
+            if (user) {
+                return res.status(200).json(user);
+            }
         } catch (e) {
-            return res.status(400).json({ status: 400, message: e.message });
+            const { id } = req.params;
+
+            logger.warn({
+                service: serviceName,
+                method: req.method,
+                params: id,
+                message: e.message
+            });
+
+            return next(e);
         }
     }
 };
