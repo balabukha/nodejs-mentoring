@@ -25,3 +25,10 @@ export const groupQuerySchema = Joi.object({
     permission: Joi.string()
         .valid(['READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES']).required()
 });
+
+export const authQuerySchema = Joi.object({
+    login: Joi.string()
+        .required(),
+    password: Joi.string()
+        .required()
+});
