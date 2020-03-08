@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config';
 
-const ONE_HOUR = Math.floor(Date.now() / 1000) + (60 * 1);
+const ONE_HOUR = Math.floor(Date.now() / 1000) + (60 * 60);
 
 export default async (req, res) => {
     try {
