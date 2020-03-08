@@ -37,7 +37,7 @@ export default {
     async getUser(req, res, next) {
         try {
             const { id } = req.params;
-            const users = await UserService.getUserd(id);
+            const users = await UserService.getUser(id);
             if (users && users.length) {
                 return res.status(200).json(users);
             }
