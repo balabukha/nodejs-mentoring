@@ -20,5 +20,7 @@ export default (req, res, next) => {
                 default: res.status(400).json({ message: 'server error' });
             }
         }
+    } else {
+        res.status(403).json({ message: 'token is not valid' });
     }
 };
