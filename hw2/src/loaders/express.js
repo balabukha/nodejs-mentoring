@@ -7,6 +7,7 @@ import auth from './auth.js';
 import GroupRouts from '../group/GroupRouts';
 import UserGroupRouts from '../userGroup/UserGroupRouts';
 import requestLogger from '../middlewares/requestLogger';
+import logger from '../logger';
 
 export default async ({ app }) => {
     app.use(express.json());
@@ -23,6 +24,12 @@ export default async ({ app }) => {
     });
     app.use((err, req, res, next) => {
         console.error(err.stack);
+        logger.warn({
+            service: 'app',
+            method: req.method,
+            query: req.query,
+            message: err.stack
+        });
         res.status(500).send(`Server error ${err}`);
     });
     return app;
