@@ -16,6 +16,7 @@ let request;
 
 const regularUser = resourceCreator.createRegularUser();
 const emptyUserFields = resourceCreator.createEmptyUserField();
+const createRegularUserToUpdate = resourceCreator.createRegularUserToUpdate();
 // const emptyLoginField = resourceCreator.createEmptyLoginField();
 // const emptyPasswordField = resourceCreator.createEmptyPasswordField();
 // const noUsernameParams = resourceCreator.createWithNoLogin();
@@ -29,7 +30,7 @@ const emptyUserFields = resourceCreator.createEmptyUserField();
 const usersRoute = '/users/';
 const loginRoute = '/login/';
 const userId = '1';
-const errorTextWhileLoginError  = 'Error validating request body. "login" is not allowed to be empty. "password" is not allowed to be empty. "age" is not allowed. "isDeleted" is not allowed.';
+const errorTextWhileLoginError  = 'Error validating request body. "login" is not allowed to be empty. "password" is not allowed to be empty. "age" is not allowed. "isDeleted" is not allowed. "id" is not allowed.';
 const FULL_JWT_IN_HEADER = (JWT) => (`Bearer ${JWT}`);
 const REQUEST = (user) => ({
     body: user
@@ -116,50 +117,31 @@ describe('/users route tests', () => {
                 });
         });
 
-        // it('method than creates token', done => {
-        // TODO: DB starts later ????
-
-        //     request
-        //         .post(`${usersRoute}`)
-        //         .set('Authorization', FULL_JWT_IN_HEADER(token()))
-        //         .send(regularUser)
-        //         .expect(200)
-        //         .then((res) => {
-        //             console.log(' -- res --', res);
-        //             done();
-        //         })
-        //         .catch(err => console.log('err', err));
-        // });
-
         it('Should CREATE a regular user, by calling to DB', async () => {
-            const SPY = jest.fn(() => regularUser);
-            jest
-                .spyOn(UserDAL, 'createUser')
-                .mockImplementation(() => SPY(regularUser));
+            const spy = jest.spyOn(UserDAL, 'createUser').mockImplementation(() => regularUser);
 
             await UserController.createUser(REQUEST(regularUser), res);
-            expect(SPY).toHaveBeenCalledTimes(1);
-            expect(SPY).toHaveBeenCalledWith(regularUser);
+            expect(spy).toHaveBeenCalledTimes(1);
         });
 
         it('Should DELETE a user, using an ID, by calling to DB', async () => {
-            const SPY = jest.fn(() => '12345');
-            jest
-                .spyOn(UserDAL, 'deleteUser')
-                .mockImplementation(() => SPY());
+            const spy = jest.spyOn(UserDAL, 'deleteUser').mockImplementation(() => '12345');
 
             await UserController.deleteUser({ params: { id: '12345' } }, res);
-            expect(SPY).toHaveBeenCalledTimes(1);
+            expect(spy).toHaveBeenCalledTimes(1);
         });
 
-        it('Should DELETE a user, using an ID, by calling to DB', async () => {
-            const SPY = jest.fn(() => '12345');
-            jest
-                .spyOn(UserDAL, 'deleteUser')
-                .mockImplementation(() => SPY());
+        it('Should UPDATE a user, using an ID and new values, by calling to DB', async () => {
+            const spy = jest.spyOn(UserDAL, 'updateUser').mockImplementation(() => createRegularUserToUpdate);
 
-            await UserController.deleteUser({ params: { id: '12345' } }, res);
-            expect(SPY).toHaveBeenCalledTimes(1);
+            await UserController.updateUser({
+                params: {
+                    id: createRegularUserToUpdate.id
+                },
+                body: createRegularUserToUpdate
+            }, res);
+
+            expect(spy).toHaveBeenCalledTimes(1);
         });
     });
 });
