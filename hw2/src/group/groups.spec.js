@@ -41,7 +41,7 @@ describe('Test suits to group route', () => {
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('Should UPDATE a user, using an ID and new values, by calling to DB', async () => {
+    it('Should UPDATE a GROUP, using an ID and new values', async () => {
         const req = {
             params: {
                 id: '12345'
