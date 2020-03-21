@@ -5,7 +5,17 @@ export default {
             login: 'regularUser',
             password: 'regularPassword',
             age: 22,
-            isDeleted: false
+            isDeleted: false,
+            id: '12345'
+        };
+    },
+    createRegularUserToUpdate: () => {
+        return {
+            login: 'regularUser2',
+            password: 'regularPassword2',
+            age: 33,
+            isDeleted: false,
+            id: '12345'
         };
     },
     createEmptyUserField: () => {
@@ -13,7 +23,8 @@ export default {
             login: '',
             password: '',
             age: '',
-            isDeleted: ''
+            isDeleted: '',
+            id: '12345'
         };
     },
     createEmptyLoginField: () => {
@@ -21,7 +32,8 @@ export default {
             login: '',
             password: 'notAnEmptyPassword',
             age: 22,
-            isDeleted: false
+            isDeleted: false,
+            id: '12345'
         };
     },
     createEmptyPasswordField: () => {
@@ -29,21 +41,24 @@ export default {
             login: 'notAnEmptyUsername',
             password: '',
             age: 22,
-            isDeleted: false
+            isDeleted: false,
+            id: '12345'
         };
     },
     createWithNoLogin: () => {
         return {
             password: 'passwordWithNoUsername',
             age: 22,
-            isDeleted: false
+            isDeleted: false,
+            id: '12345'
         };
     },
     createWithNoPassword: () => {
         return {
             login: 'loginWithNoPassword',
             age: 22,
-            isDeleted: false
+            isDeleted: false,
+            id: '12345'
         };
     },
     userWithInvalidUsername: () => {
@@ -51,7 +66,8 @@ export default {
             login: '123thomas',
             password: 'invalidUsername',
             age: 22,
-            isDeleted: false
+            isDeleted: false,
+            id: '12345'
         };
     },
     userWithOnlyNumsForUsername: () => {
@@ -67,7 +83,8 @@ export default {
             login: 'a',
             password: 'invalidUsername',
             age: 22,
-            isDeleted: false
+            isDeleted: false,
+            id: '12345'
         };
     },
     userWithInvalidEmail: () => {
@@ -75,7 +92,8 @@ export default {
             login: 'invalidUserEmail',
             password: 'invalidEmailPassword',
             age: 22,
-            isDeleted: false
+            isDeleted: false,
+            id: '12345'
         };
     },
     userWithInvalidPassword: () => {
@@ -83,7 +101,8 @@ export default {
             login: 'invalidPasswordUsername',
             password: '',
             age: 22,
-            isDeleted: false
+            isDeleted: false,
+            id: '12345'
         };
     }
 };
